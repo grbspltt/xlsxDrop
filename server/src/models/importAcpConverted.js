@@ -1,11 +1,13 @@
-import { promisifyAll } from 'bluebird'
-import { shortDate } from 'plugins'
+import Promise from 'bluebird'
+var promisifyAll = Promise.promisifyAll;
+import { shortDate } from './plugins'
 let mongoose = promisifyAll(require('mongoose'));
-const { Schema, model, Schema:{Types:{ObjectId: objectId}} } = mongoose;
+var Schema = mongoose.Schema;
+
 let importAcpConvertedModel;
 
 let importAcpConvertedSchema = new Schema({
-  projId: { type: objectId, ref: 'proj' },
+  //projId: { type: objectId, ref: 'proj' },
   projectNo: { type: String },
   date: { type: String },
   cpfoNo: { type: String },
@@ -50,6 +52,6 @@ let importAcpConvertedSchema = new Schema({
 importAcpConvertedSchema.set('toJSON', {getters: true, virtuals: true});
 
 //create the model
-importAcpConvertedModel = model('importAcpConverted', importAcpConvertedSchema);
+importAcpConvertedModel = mongoose.model('importAcpConverted', importAcpConvertedSchema);
 module.exports.importAcpConvertedSchema = importAcpConvertedSchema;
 module.exports.importAcpConvertedModel = importAcpConvertedModel;

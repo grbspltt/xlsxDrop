@@ -1,7 +1,6 @@
 var Promise = require('bluebird'),
   mongoose = Promise.promisifyAll(require('mongoose')),
   Schema = mongoose.Schema,
-  model = mongoose.model,
   objectId = Schema.Types.ObjectId,
   shortDate = require('./plugins').shortDate;
 var tempAcpDropModel;
@@ -60,6 +59,6 @@ tempAcpDropSchema.static({
 tempAcpDropSchema.set('toJSON', {getters: true, virtuals: true});
 
 //create the model
-tempAcpDropModel = model('acp', tempAcpDropSchema);
+tempAcpDropModel = mongoose.model('acpTempDrop', tempAcpDropSchema);
 module.exports.tempAcpDropSchema = tempAcpDropSchema;
-module.exports.tempAcpDropModel = tempAcpDropModel;
+module.exports.tempAcpDropModel = tempAcpDropModel; 

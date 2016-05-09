@@ -1,9 +1,9 @@
-var Promise = require('bluebird'),
-  mongoose = Promise.promisifyAll(require('mongoose')),
+import Promise from 'bluebird'
+var  mongoose = Promise.promisifyAll(require('mongoose')),
   Schema = mongoose.Schema,
-  model = mongoose.model,
-  objectId = Schema.Types.ObjectId,
-  shortDate = require('./plugins').shortDate;
+  objectId = Schema.Types.ObjectId;
+import { shortDate } from './plugins'
+
 var acpHistModel;
 
 let acpHistSchema = new Schema({
@@ -52,6 +52,6 @@ let acpHistSchema = new Schema({
 acpHistSchema.set('toJSON', {getters: true, virtuals: true});
 
 //create the model
-acpHistModel = model('acpHist', acpHistSchema);
+acpHistModel = mongoose.model('acpHist', acpHistSchema);
 module.exports.acpHistSchema = acpHistSchema;
 module.exports.acpHistModel = acpHistModel;
