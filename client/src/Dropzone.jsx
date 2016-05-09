@@ -8,7 +8,13 @@ export default class Dropzone extends React.Component {
       fileName: '',
       loaded: false,
       output:''
-    }
+    };
+    this._handleDrop = this._handleDrop.bind(this);
+    this._download = this._download.bind(this);
+    this._handleDragover = this._handleDragover.bind(this);
+    this._fixdata = this._fixdata.bind(this);
+    this._process = this._process.bind(this);
+    this._toJSON = this._toJSON.bind(this);
   }
   componentDidMount() {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -36,6 +42,7 @@ export default class Dropzone extends React.Component {
     e.preventDefault();
     console.log("file dropped",  e.dataTransfer.files[0].name);
     let file = e.dataTransfer.files[0];
+    console.log(file);
     let fileName = `${file.name.replace(/\.[^/.]+$/, "")}.json`;
     console.log(`FileName: ${fileName}`);
     let reader = new FileReader();
