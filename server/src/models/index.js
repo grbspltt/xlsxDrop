@@ -6,5 +6,6 @@ export default {
   tempAcpDrop: require('./tempAcpDrop').tempAcpDropModel,
   budget: require('./budget').budgetModel,
   budgetTemp: require('./budgetTemp').budgetTempModel,
-  budgetOld: require('./budgetOld').budgetOldModel
+  budgetOld: require('./budgetOld').budgetOldModel,
+  auhsdAccounting: require('./auhsdAccounting').auhsdAccountingModel
 }
