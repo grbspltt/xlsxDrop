@@ -11,7 +11,7 @@ export default models
 // =============
 app.use(logger('tiny'));
 app.use(express.static('../../client/build'));
-app.use(bodyParser.json(/*{limit:'50mb',extended:false, parameterLimit:100000}*/));
+app.use(bodyParser.json({limit:'50mb',extended:false, parameterLimit:100000}));
 app.use(bodyParser.urlencoded({limit:'50mb',extended:false, parameterLimit:100000}));
 
 // Setup CORS
