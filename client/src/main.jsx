@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import Dropzone from './Dropzone'
 
+import { AUHSD_ACCOUNTING_URL } from './constants'
+
 class Main extends Component {
   constructor(props){
     super(props);
@@ -22,7 +24,7 @@ class Main extends Component {
         <h2>Excel2JSON!</h2>
         <label htmlFor="download">Download JSON File?</label>
         <input id="download" type="checkbox" name="download" onChange={this.handleDownload}/>
-        <Dropzone download={this.state.download} />
+        <Dropzone download={this.state.download} uploadUrl={AUHSD_ACCOUNTING_URL}/>
         <h4>Readme</h4>
         <ol>
           <li>Format the excel file so that the column headings appear on Row #1. The column headings will be the object keys.</li>

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import utils from './utils'
 
 export default class Dropzone extends React.Component {
   constructor(props){
@@ -42,7 +43,6 @@ export default class Dropzone extends React.Component {
     e.preventDefault();
     console.log("file dropped",  e.dataTransfer.files[0].name);
     let file = e.dataTransfer.files[0];
-    console.log(file);
     let fileName = `${file.name.replace(/\.[^/.]+$/, "")}.json`;
     console.log(`FileName: ${fileName}`);
     let reader = new FileReader();
@@ -50,7 +50,13 @@ export default class Dropzone extends React.Component {
       let data = e.target.result;
       data = this._fixdata(data);
       data = XLSX.read(btoa(data),{type: 'base64'});
-      this._process(data, this._download.bind(this, fileName));
+      // Download or upload to server
+      // ============================
+      if(this.props.download){
+        this._process(data, this._download.bind(this, fileName));
+      }{
+        this._uploadToServer(this._toJSON(data)['Sheet1'], this.props.uploadUrl)
+      }
     };
     reader.readAsArrayBuffer(file);
   }
@@ -64,6 +70,7 @@ export default class Dropzone extends React.Component {
 
   _process(_data,cb){
     var data = this._toJSON(_data);
+    console.log(data);
     cb(JSON.stringify(data[Object.keys(data)[0]]));
   }
 
@@ -85,7 +92,7 @@ export default class Dropzone extends React.Component {
   }
   
   _uploadToServer(data, url){
-    
+    utils.ajax('post', url, data);
   }
 
   _download(filename, json){
