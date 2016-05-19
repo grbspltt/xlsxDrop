@@ -22,7 +22,7 @@ module.exports = {
   },
   module:{
     loaders:[
-      {test:/\.jsx$/, include: path.resolve(ROOT_PATH,'client/src'), loader:'babel'}
+      {test:/\.jsx$|\.js$/, include: path.resolve(ROOT_PATH,'client/src'), loader:'babel'}
     ]
   },
   plugins:[
