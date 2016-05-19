@@ -3,12 +3,26 @@ import ReactDOM from 'react-dom'
 import Dropzone from './Dropzone'
 
 class Main extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      download: false
+    }
+    this.handleDownload = this.handleDownload.bind(this);
+  }
+  handleDownload(e){
+    this.setState({
+      download: e.target.checked
+    });
+  }
+
   render() {
     return (
-
       <div>
         <h2>Excel2JSON!</h2>
-        <Dropzone />
+        <label htmlFor="download">Download JSON File?</label>
+        <input id="download" type="checkbox" name="download" onChange={this.handleDownload}/>
+        <Dropzone download={this.state.download} />
         <h4>Readme</h4>
         <ol>
           <li>Format the excel file so that the column headings appear on Row #1. The column headings will be the object keys.</li>
