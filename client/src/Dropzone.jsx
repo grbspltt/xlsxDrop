@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import req from 'superagent'
 
 export default class Dropzone extends React.Component {
   constructor(props){
@@ -15,6 +14,7 @@ export default class Dropzone extends React.Component {
     this._fixdata = this._fixdata.bind(this);
     this._process = this._process.bind(this);
     this._toJSON = this._toJSON.bind(this);
+    this._uploadToServer = this._uploadToServer.bind(this);
   }
   componentDidMount() {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -82,6 +82,10 @@ export default class Dropzone extends React.Component {
     e.stopPropagation();
     e.preventDefault();
     e.dataTransfer.dropEffect = 'copy';
+  }
+  
+  _uploadToServer(data, url){
+    
   }
 
   _download(filename, json){
