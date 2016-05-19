@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import models from './index'
 
-mongoose.connect('mongodb://@localhost:27017/uploadTest');
+mongoose.connect('mongodb://localhost/uploadTest');
 let connection = mongoose.connection;
 
 connection.on('error',console.error.bind(console,'connection error:'));
