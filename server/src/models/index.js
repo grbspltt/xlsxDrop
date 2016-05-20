@@ -7,5 +7,6 @@ export default {
   budget: require('./budget').budgetModel,
   budgetTemp: require('./budgetTemp').budgetTempModel,
   budgetOld: require('./budgetOld').budgetOldModel,
-  auhsdAccounting: require('./auhsdAccounting').auhsdAccountingModel
+  auhsdAccounting: require('./auhsdAccounting').auhsdAccountingModel,
+  auhsdAccountingHist: require('./auhsdAccountingHist').auhsdAccountingHistModel
 }

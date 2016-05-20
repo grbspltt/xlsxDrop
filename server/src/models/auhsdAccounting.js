@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'), 
     Schema = mongoose.Schema, 
-    auhsdAccountingModel;
+    auhsdAccountingModel,
+  hist = require('./auhsdAccountingHist').auhsdAccountingHistModel;
 
 const Types = mongoose.SchemaTypes;
 
@@ -45,7 +46,73 @@ var auhsdAccountingSchema = new Schema({
 
 // static methods
 // ====================================
-// auhsdAccountingSchema .static({});
+auhsdAccountingSchema.static({
+  toHist(){
+    // check for rows to send to hist
+    // ==============================
+    if(this.collection.stats().count > 0){
+      // if there are rows, insert into hist collection
+      // ====================================
+      return this.find({}).exec()
+        .then((data)=>{
+          return Promise.resolve()
+            .then(()=>{
+              return hist.collection.insert(data);
+            })
+            .then((result)=>{
+              // If write result is ok, delete live data
+              // =======================================
+
+              // todo START HERE the write result from insert {result:{ok:1}}
+              // does not match deleteMany:
+              // {acknowledged: true, deletedCount: ###}
+
+              if(result.result.ok){
+                return this.collection.deleteMany({});
+              } else {
+                throw Error('Live Data to Hist Failed!')
+              } 
+            })
+            .catch((err)=>{
+              // If error
+              // ========
+              console.log(err.message);
+              hist.deleteRecentData();              
+            })
+        })
+    } else {
+      return Promise.resolve()
+        .then(()=>{
+          return {result:{ok:1}}; //format mimicks bulk insert write result
+        });
+    }
+  },
+  clear(){
+    return Promise.resolve()
+      .then(()=>{
+        return this.collection.deleteMany({});
+      })
+  },
+  rollback(){
+    return  Promise.resolve()
+      .then(()=>{
+        // Remove all data in collection
+        // =============================
+        return this.collection.deleteMany({});
+      })
+      // get most recent data from hist
+      // ==============================
+      .then(hist.recentData)
+      .then((rows)=>{
+        return Promise.resolve()
+          .then(()=>{
+            // insert data
+            // ===========
+            return this.collection.insert(rows);
+          })
+      })
+  }
+});
 
 // add plugins
 // ====================================
